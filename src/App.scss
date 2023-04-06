@@ -1,0 +1,23 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: content-box;
+}
+.custom-img {
+  object-position: center center;
+  width:100%;
+  height:100%;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.container-img {
+  width: inherit;
+  height: 180px;
+}
+
+.height {
+  height: 30%;
+}
+
+
