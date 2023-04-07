@@ -1,13 +1,13 @@
 # List-Bank
 
-Esta es una aplicación básica de React creada con Vite.
+This is a basic React app created with Vite.
 
-### Requisitos previos
+### Prerequisites
 
-Antes de continuar, asegúrate de tener instalado lo siguiente en tu sistema:
+Before continuing, make sure you have the following installed on your system:
 
-* Node.js (v14 o superior)
-* npm (v6 o superior)
+* Node.js (v14 or higher)
+* npm (v6 or higher)
 
 ### Instalación
 
