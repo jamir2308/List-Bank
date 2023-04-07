@@ -1,6 +1,7 @@
 module.exports = {
-    moduleFileExtensions: ['js', 'jsx', 'js', 'json'],
-    collectCoverageFrom: ['<rootDir>/**/*.{ts, tsx}'],
+    collectCoverageFrom: ['<rootDir>/**/*.{js, jsx}'],
+    coverageDirectory: "coverage",
+    testEnvironment: "jsdom",
     testMatch: [
       '<rootDir>/src/**/__tests__/**/*.{js,jsx}',
       '<rootDir>/src/**/*.{spec,test}.{js,jsx}',
@@ -13,4 +14,7 @@ module.exports = {
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
     ],
+    moduleNameMapper: {
+        "\\.(css|less|scss)$": "identity-obj-proxy",
+    }
   };

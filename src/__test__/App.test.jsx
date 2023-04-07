@@ -1,5 +1,5 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom'
 import App from './../App';
 
 test('Renderiza el título correctamente', () => {
@@ -10,9 +10,12 @@ test('Renderiza el título correctamente', () => {
 
 test('Renderiza la lista de bancos', async () => {
   const mockResponse = [
-    { id: 1, name: 'Banco 1' },
-    { id: 2, name: 'Banco 2' },
-    { id: 3, name: 'Banco 3' },
+    {
+      "description": "esto es una descripcion",
+      "age": 10,
+      "url": "https://imagenestest.com",
+      "bankName": "Banco"
+    }
   ];
 
   global.fetch = jest.fn(() =>
@@ -23,6 +26,6 @@ test('Renderiza la lista de bancos', async () => {
 
   render(<App />);
 
-  const bankListItems = await screen.findAllByRole('listitem');
+  const bankListItems = await screen.findAllByTestId('bank');
   expect(bankListItems).toHaveLength(mockResponse.length);
 });

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const BankCard = ({ bankName, description, age, url }) => {
     return (
-        <div className="card h-100">
+        <div data-testid="bank" className="card h-100">
             <div className="container-img">
                 <img src={url} className="custom-img" alt={bankName} />
             </div>

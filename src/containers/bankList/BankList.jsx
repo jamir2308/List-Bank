@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Row, Col, Alert } from 'react-bootstrap';
 import Spinner from '../../components/spinner/Spinner';
 import BankCard from '../../components/bankCard/BankCard';
@@ -22,13 +21,13 @@ const BankList = () => {
 
   return (
     <Row>
-      {data && data.map((bank) => (
-        <Col key={bank.bankName} xs={12} md={6} lg={4} className='mt-4'>
+      {data && data.map(({bankName,description,age,url}) => (
+        <Col key={bankName} xs={12} md={6} lg={4} className='mt-4'>
           <BankCard
-            bankName={bank.bankName}
-            description={bank.description}
-            age={bank.age}
-            url={bank.url}
+            bankName={bankName}
+            description={description}
+            age={age}
+            url={url}
           />
         </Col>
       ))}
