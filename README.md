@@ -9,7 +9,7 @@ Before continuing, make sure you have the following installed on your system:
 * Node.js (v14 or higher)
 * npm (v6 or higher)
 
-### Instalación
+### Installation
 
 **1. Clone this repository to your local machine:**
 
