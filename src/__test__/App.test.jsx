@@ -1,31 +1,27 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom'
 import App from './../App';
+import { Provider } from 'react-redux';
+import { store } from '../store/index';
 
-test('Renderiza el título correctamente', () => {
-  render(<App />);
-  const titulo = screen.getByText(/Lista de Bancos/i);
-  expect(titulo).toBeInTheDocument();
-});
+describe('App', () => {
+  test('should render title', () => {
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    const title = screen.getByText('Lista de Bancos');
+    expect(title).toBeInTheDocument();
+  });
 
-test('Renderiza la lista de bancos', async () => {
-  const mockResponse = [
-    {
-      "description": "esto es una descripcion",
-      "age": 10,
-      "url": "https://imagenestest.com",
-      "bankName": "Banco"
-    }
-  ];
-
-  global.fetch = jest.fn(() =>
-    Promise.resolve({
-      json: () => Promise.resolve(mockResponse),
-    })
-  );
-
-  render(<App />);
-
-  const bankListItems = await screen.findAllByTestId('bank');
-  expect(bankListItems).toHaveLength(mockResponse.length);
+  test('should render BankList', () => {
+    render(
+      <Provider store={store}>
+        <App />
+      </Provider>
+    );
+    const bankList = screen.getByRole('list');
+    expect(bankList).toBeInTheDocument();
+  });
 });

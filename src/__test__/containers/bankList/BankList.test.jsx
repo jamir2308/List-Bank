@@ -1,42 +1,74 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import { useDispatch, useSelector } from 'react-redux';
 import '@testing-library/jest-dom';
 import BankList from '../../../containers/bankList/BankList';
 
-describe('BankList component', () => {
 
-  test('renders a spinner while loading data', () => {
-    const { container } = render(<BankList />);
-    expect(container.querySelector('.spinner-border')).toBeInTheDocument();
+jest.mock('react-redux', () => ({
+  useDispatch: jest.fn(),
+  useSelector: jest.fn(),
+}));
+
+describe('BankList component', () => {
+  let dispatch;
+  let bankList;
+
+  beforeEach(() => {
+    dispatch = jest.fn();
+    useSelector.mockImplementation(callback =>
+      callback({
+        banks: { bankList: bankList },
+      })
+    );
+    useDispatch.mockReturnValue(dispatch);
   });
 
-  test('renders an error message when data loading fails', async () => {
-    const mockData = [
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should render Spinner when bankList is falsy', () => {
+    bankList = null;
+    render(<BankList />);
+    expect(screen.getByRole('status')).toBeInTheDocument();
+    expect(screen.queryByTestId('bank-row')).not.toBeInTheDocument();
+  });
+
+  it('should render BankCard for each bank in bankList', () => {
+    bankList = [
       {
-        bankName: 'Mock Bank 1',
-        description: 'Mock Bank 1 Description',
+        bankName: 'Bank A',
+        description: 'Bank A description',
         age: '10 years',
-        url: 'https://www.mockbank1.com/',
+        url: 'https://www.banka.com',
       },
       {
-        bankName: 'Mock Bank 2',
-        description: 'Mock Bank 2 Description',
+        bankName: 'Bank B',
+        description: 'Bank B description',
         age: '5 years',
-        url: 'https://www.mockbank2.com/',
+        url: 'https://www.bankb.com',
       },
     ];
-    const errorMessage = 'Ha ocurrido un error al cargar los datos. Inténtelo de nuevo más tarde.';
-    const mockError = new Error('mock error');
-    jest.mock('../../../hooks/useFetch', () => ({
-      __esModule: true,
-      default: () => ({
-        data: mockData,
-        loading: false,
-        error: mockError,
-      }),
-    }));
     render(<BankList />);
-    const errorAlert = await screen.findByRole('alert');
-    expect(errorAlert).toHaveTextContent(errorMessage);
+    expect(screen.queryByTestId('spinner')).not.toBeInTheDocument();
+    expect(screen.getAllByTestId("bank")).toHaveLength(2);
+
   });
 
+  it('should pass the correct props to BankCard', () => {
+    bankList = [
+      {
+        bankName: 'Bank A',
+        description: 'Bank A description',
+        age: 10,
+        url: 'https://www.banka.com',
+      },
+    ];
+    render(<BankList />);
+    expect(screen.getByText('Bank A')).toBeInTheDocument();
+    expect(screen.getByText('Bank A description')).toBeInTheDocument();
+    expect(screen.getByText('10 años')).toBeInTheDocument();
+    expect(screen.getByRole('img')).toHaveAttribute('src', 'https://www.banka.com');
+  });
 });

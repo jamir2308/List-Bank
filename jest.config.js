@@ -10,11 +10,18 @@ module.exports = {
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     roots: ['<rootDir>'],
     setupFiles: ['./jest.setup.js'],
+    transform: {
+      '^.+\\.jsx?$': 'babel-jest',
+    '^.+\\.js$': 'babel-jest',
+    '^.+\\.mjs$': 'babel-jest',
+    },
     transformIgnorePatterns: [
       '[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$',
       '^.+\\.module\\.(css|sass|scss)$',
+      '/node_modules/(?!redux-persist)'
     ],
     moduleNameMapper: {
         "\\.(css|less|scss)$": "identity-obj-proxy",
+        '^.*\\.mjs$': 'babel-jest',
     }
   };
